@@ -1,5 +1,6 @@
 # Config
 os.bxrc
+os-dbg.bxrc
 *.bin
 *.img
 
