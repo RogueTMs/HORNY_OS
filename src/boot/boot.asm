@@ -1,57 +1,31 @@
-[BITS 16] ; Указываем, что пишем 16-битный код реального режима 8086
+[BITS 16]
+
+mov     ax, 0x7C0        ; correct value for ds
+mov     ds, ax           ; data segment
+
+cli                      ; clear interrupt-enable flag (desable int)
+xor     ax, ax
+mov     ss, ax           ; stack segment
+mov     sp, 0x7C00       ; stack pointer
 
 
-cli ; Отключение прерывания от переферийных устройств
-xor ax, ax  ; Делаем 0 в ax
-mov ss, ax  
-mov sp, 0x7C00
+mov     ah, 0xE          ; display char
+mov     bx, 0            ; counter
+mov     cx, 12           ; len of str
 
+print_loop:
+  mov    al,  [data+bx]  ; move pointer to next ascii symbol
+  cmp    bx, cx
+  je     loop            ; jump if equal
+  int    0x10            ; BIOS call
+  inc    bx
+  jmp    print_loop
 
-mov ax, 0x7C0
-mov ds, ax
+data:
+  db     'Hello world!'  ; define bytes for str
 
-mov ah, 0xE ; AH - идентифицирует конкретную функцию, 0xE - display char
+loop:
+  jmp    loop
 
-mov al, 72  ; AL - ASCII-код символа
-int 0x10    ; INT - команда генерации прерывания (системный вызов),
-            ; 0x10 - вектор видеосервисов (множество функций печати)
-
-
-mov al, 101
-int 0x10
-
-mov al, 108
-int 0x10
-
-mov al, 108
-int 0x10
-
-mov al, 111
-int 0x10
-
-mov al, 32
-int 0x10
-
-mov al,  119
-int 0x10
-
-mov al, 111
-int 0x10
-
-mov  al, 114
-int 0x10
-
-mov al, 108
-int 0x10
-
-mov al, 100
-int 0x10 
-
-mov al, 33
-int 0x10
-
-loop:       ; Бесконечный цикл
-  jmp loop
-
-times 510-($-$$) db 0 ; заполняем байтами 0x00 до 510 байт
-dw 0xAA55 ; определяем загрузочный сектор
+times 510-($-$$) db 0
+dw 0xAA55                ; define boot sector
