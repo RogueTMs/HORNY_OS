@@ -5,7 +5,7 @@ launch:
 
 
 debug: 
-	bochs -f os-dbg.bxrc -q
+	bochsdbg -f os-dbg.bxrc -q
 
 
 .PHONY: clean 
