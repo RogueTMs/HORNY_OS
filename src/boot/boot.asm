@@ -46,7 +46,6 @@ MAIN:
 		mov    al, 0x01
 		inc    cl                   ; next sector
 		cmp    cl, 0x13             ; if 19th sector -> end
-		je     check_head           ; then check if we need to change head num
 		jmp    read_loop
 
 
