@@ -37,17 +37,25 @@ MAIN:
 	;  end   = 0x80000
 	;  clear all reg before work
 	;  
-	
+	mov        si, 0x0003
 	
 	read_num:
-		int    0x13
-		; jc     errmsglb            ; error check
 		mov    ah, 0x2
 		mov    al, 0x01
+		int    0x13
+
+		jc     errmsglb            ; error check
+
+		add    di, 0x20              ; 512 bytes
+		mov    es, di
+		cmp    di, 0x8000
+		je 	   end_of_reading
+
 		inc    cl                   ; next sector
 		cmp    cl, 0x13             ; if 19th sector -> end
+		je    check_head
 		jmp    read_loop
-
+		
 
 	check_head:
 		mov    cl, 0x1
@@ -61,11 +69,7 @@ MAIN:
 		xor    dh, dh
 		inc    ch                  ; get next cyl
 
-		add    di, 0x20              ; 512 bytes
-		mov    es, di
-		cmp    di, 0x8000
-
-		jne   read_loop
+		jmp   read_loop
 
 
 
@@ -90,16 +94,16 @@ end_of_reading:
 			mov ax, es
 			inc ax 
 			cmp ax, 0x8000 
-			je check_loop
 			mov es, ax
+			je check_loop
 			xor bx, bx
 			jmp addition
 	
-			
-		
-
-; TODO: add "give a 3rd chance"
-errmsglb: db "error", 0
+errmsglb:
+	dec    si
+	cmp    si, 0x0
+	jne    read_num
+	int	   0x18 
 
 
 ; global vars
