@@ -46,13 +46,6 @@ MAIN:
 		je     check_head           ; then check if we need to change head num
 
 
-	check_pos_es:
-		mov   bx, es
-		cmp   bx, 0x8000
-		ja    end_of_reading
-		jne   read_loop
-
-
 	check_head:
 		mov    cl, 0x1
 		cmp    dh, 0
