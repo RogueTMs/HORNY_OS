@@ -17,7 +17,7 @@ mov     di, 0x2000          ;
 
 
 disk_load:
-	xor 	cx, cx
+	;xor 	cx, cx
 	mov     ah, 0x02            ; BIOS read sector from drive
 	mov     al, 0x01            ; amount of sectors
 	mov     ch, 0x00            ; cylinder number
@@ -82,7 +82,7 @@ end_of_reading:
 		xor bx, bx
 		
 	addition:
-		add dx, [es:bx]
+		add dl, BYTE[es:bx]
 		inc bx
 		cmp bx, 0x10
 		
@@ -93,8 +93,8 @@ end_of_reading:
 		move_es:
 			mov ax, es
 			inc ax 
-			cmp ax, 0x8000 
 			mov es, ax
+			cmp ax, 0x8000 
 			je check_loop
 			xor bx, bx
 			jmp addition
