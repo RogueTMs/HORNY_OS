@@ -13,6 +13,8 @@ xor     ax, ax
 mov     ss, ax           ; stack segment
 mov     sp, 0x7C00       ; stack pointer
 
+mov     di, 0x2000          ;
+
 
 disk_load:
 	xor 	cx, cx
@@ -40,51 +42,36 @@ MAIN:
 	read_num:
 		int    0x13
 		; jc     errmsglb            ; error check
-
-		add    cl, 1                ; next sector
+		mov    ah, 0x2
+		mov    al, 0x01
+		inc    cl                   ; next sector
 		cmp    cl, 0x13             ; if 19th sector -> end
 		je     check_head           ; then check if we need to change head num
+		jmp    read_loop
 
 
 	check_head:
 		mov    cl, 0x1
-		cmp    dh, 0
-		je     inc_head            ; change dh to 1
-		jne    dec_head            ; change dh to 0 and go to next cyl
+		inc    dh
+		cmp    dh, 0x2
+		je     change_cyl
+		jmp    read_loop
 
-	inc_head:
-		inc    dh                  ; head -> 1
-		;jmp    check_pos_es
-		jmp     read_loop
-	dec_head:
-		mov    di, es
+
+	change_cyl:
+		xor    dh, dh
+		inc    ch                  ; get next cyl
+
 		add    di, 0x20              ; 512 bytes
+		mov    es, di
 		cmp    di, 0x8000
-		ja    end_of_reading
+
 		jne   read_loop
 
-		mov    es, di
-		xor    di, di
-
-		inc    ch                  ; get next cyl
-		dec    dh                  ; head -> 0
-		;jmp    check_pos_es
-		jmp      read_loop
-
-	end_of_reading:
-
-		; TODO: take check sum
-		; calc_sum:
-		;	sum_loop:
-		;		........
-		;		cmp ex(or bx?), 0x8000
-		;		....
-		;		jmp end_loop
 
 
+end_of_reading:
 
-calc_sum:
-	
 	prepare: 
 		mov ax, 0x2000
 		mov es, ax
@@ -103,7 +90,7 @@ calc_sum:
 		move_es:
 			mov ax, es
 			inc ax 
-			cmp ax, 0x8001
+			cmp ax, 0x8000 
 			je check_loop
 			mov es, ax
 			xor bx, bx
