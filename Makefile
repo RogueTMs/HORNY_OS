@@ -26,13 +26,13 @@ bootimg:
 
 
 concat:
-	dd if=src/boot/Binary_file/binary.bin of=src/boot/boot.img conv=notrunc seek=1
+	dd if=src/boot/bin/binary.bin of=src/boot/boot.img conv=notrunc seek=1
 
 
 genbin:
-	python src/boot/Binary_file/Gener_bin.py
+	python src/boot/bin/Gener_bin.py
 
 readbin:
-	python src/boot/Binary_file/Read_bin.py
+	python src/boot/bin/Read_bin.py
 
 clean: 
