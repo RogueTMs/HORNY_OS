@@ -1,6 +1,6 @@
 [BITS 16]
 
-mov 	ax, 0x7C0                ; correct value for ds
+mov 		ax, 0x7C0        ; correct value for ds
 mov		ds, ax           ; data segment
 mov		ax, 0x2000       ; correct value for stack segment
 mov		es, ax           ; extra segment
