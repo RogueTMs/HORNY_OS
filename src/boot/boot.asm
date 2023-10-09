@@ -71,7 +71,7 @@ end_of_reading:
 		add dl, BYTE[es:bx]         ; add the value from es:bx
 		inc bx
 		cmp bx, 0x10                ; if bx == 17
-		je move_es                  ; -> we shold inc es by 1 (due to [es<<1 + bx])
+		je move_es                  ; -> we should inc es by 1 
 		jmp addition                ; else - continue summation
 		
 		move_es:
