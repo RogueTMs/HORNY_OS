@@ -1,21 +1,15 @@
 [BITS 16]
 
-mov 		ax, 0x7C0        ; correct value for ds
-mov		ds, ax           ; data segment
-mov		ax, 0x2000       ; correct value for stack segment
-mov		es, ax           ; extra segment
-
-cli                              ; clear interrupt-enable flag (desable int)
+cli                      ; clear interrupt-enable flag (desable int)
 xor		ax, ax
 mov		ss, ax           ; stack segment
 mov		sp, 0x7C00       ; stack pointer
 mov		di, 0x2000       ; for writing to buff (0x20000-0x80000)
 
 
-disk_load:
-	mov     ch, 0x0000             ; cylinder number
-	mov     dh, 0                  ; head number
-	mov     cl, 0x1                ; starting sector number (from 2 to 18)
+xor     ch, ch           ; cylinder number
+xor     dh, dh           ; head number
+mov     cl, 0x1          ; starting sector number (from 2 to 18)
 
 
 read_loop:
@@ -28,17 +22,20 @@ read_loop:
 	mov		si, 0x03            ; error counter 
 	
 	read_num:
-		mov	ah, 0x02            ; BIOS read sector from drive
+		cmp    	di, 0x8000          ; if end of buff
+		je 		end_of_reading      ; then jump to end_of_read
+		
+		mov     es, di				; current value for stack segment
+		mov	    ah, 0x02            ; BIOS read sector from drive
 		mov     al, 0x01            ; amount of sectors
 		int     0x13                
 
-		jc	errmsglb            ; error check
-
+		jc		errmsglb            ; error check
+		
 		add    	di, 0x20            ; 512 bytes
-		mov    	es, di              
-		cmp    	di, 0x8000          ; if end of buff
-		je 	end_of_reading      ; then jump to end_of_read
-					    ; else get next sector
+		
+	
+									; else get next sector
 		inc    	cl                  ; next sector
 		cmp    	cl, 0x13            ; if 19th sector -> 
 		je    	check_head          ; check head_num
@@ -56,7 +53,7 @@ read_loop:
 	change_cyl:
 		xor    	dh, dh              ; head num -> 0
 		inc    	ch                  ; get next cyl
-		jmp   	read_loop	    ; read from next cyl
+		jmp   	read_loop	   		; read from next cyl
 
 
 
