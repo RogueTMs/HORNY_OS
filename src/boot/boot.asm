@@ -34,8 +34,6 @@ read_loop:
 		
 		add    	di, 0x20            ; 512 bytes
 		
-	
-									; else get next sector
 		inc    	cl                  ; next sector
 		cmp    	cl, 0x13            ; if 19th sector -> 
 		je    	check_head          ; check head_num
