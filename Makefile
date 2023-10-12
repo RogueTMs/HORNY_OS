@@ -35,4 +35,11 @@ genbin:
 readbin:
 	python src/boot/bin/Read_bin.py
 
+kernel:
+	gcc -m32 -ffreestranding -c -o kernel.o src/kernel/kernel.c
+	ld -m i386pe -o kernel.tmp -Ttext 0x20200 kernel.o
+	objcopy -I pe-386 -O binary kernel.tmp kernel.bin
+
+	dd if=kernel.bin of=boot.img conv=nontrunc seek=1
+
 clean: 
