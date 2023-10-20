@@ -7,6 +7,7 @@ mov		sp, 0x7C00       ; stack pointer
 mov		di, 0x2000       ; for writing to buff (0x20000-0x80000)
 
 
+xor     bx, bx
 xor     ch, ch           ; cylinder number
 xor     dh, dh           ; head number
 mov     cl, 0x1          ; starting sector number (from 2 to 18)

@@ -36,10 +36,10 @@ readbin:
 	python src/boot/bin/Read_bin.py
 
 kernel:
-	gcc -m32 -ffreestranding -c -o kernel.o src/kernel/kernel.c
-	ld -m i386pe -o kernel.tmp -Ttext 0x20200 kernel.o
-	objcopy -I pe-386 -O binary kernel.tmp kernel.bin
+	gcc -m32 -ffreestanding -c -o src/kernel/kernel.o src/kernel/kernel.c
+	ld -m i386pe -o src/kernel/kernel.tmp -Ttext 0x20200 src/kernel/kernel.o
+	objcopy -I pe-i386 -O binary src/kernel/kernel.tmp src/kernel/kernel.bin
 
-	dd if=kernel.bin of=boot.img conv=nontrunc seek=1
+	dd if=src/kernel/kernel.bin of=src/boot/boot.img conv=notrunc seek=1
 
 clean: 
