@@ -1,3 +1,4 @@
 void kernel_entry(){
-  for (;;);
+	*((short int*)0xB8000) = 0;	
+	for (;;);
 }
