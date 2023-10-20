@@ -3,13 +3,13 @@
 gdt_start:
   dq 0x0                           ; null descriptor
 gdt_code:
-; db ...
+  dq 0x30A60000000000
 gdt_data:
-; db ...
+  dq 0xC2920000000000
 
 gdt_end:                           ; ??
 
-lbdt [gdt_descriptor]              ;
+lgdt [gdt_descriptor]              ;
 
 gdt_descriptor:
   dw gdt_end - gdt_start - 1       ; labels arithmetic
