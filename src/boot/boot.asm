@@ -87,8 +87,57 @@ errmsglb:
 					    ; else go to end_loop
 
 end_loop:
-	jmp end_loop                        ; inf loop
-
+;	jmp end_loop   - убит
 
 times 510-($-$$) db 0
-dw 0xAA55                           ; define boot sector
+dw 0xAA55  
+
+mov ah, 0xE
+mov al, "A"
+int 0x10
+
+        
+
+gdt_start:
+  dq 0x0                           ; null descriptor
+gdt_code:
+  dq 0x92C200
+  ;dw 0x92c2
+  ;dw 0x0
+gdt_data:
+  dq 0xA63000
+  ;dw 0xa630
+  ;dw 0x0
+
+gdt_end:                           ; ??
+
+lgdt [gdt_descriptor]              ;
+
+gdt_descriptor:
+  dw gdt_end - gdt_start - 1       ; labels arithmetic
+  dd gdt_start + 0x20000           ; GDT linear address in VBR copy
+
+CODE_SEG equ gdt_code - gdt_start  ; def constants
+DATA_SEG equ gdt_data - gdt_start
+
+
+jmp CODE_SEG:protected_mode_tramplin + 0x7c00
+
+[BITS 32]
+
+protected_mode_tramplin:
+  mov eax, DATA_SEG
+  mov ds,  eax
+  mov ss,  eax
+  mov es,  eax
+  mov fs,  eax
+  mov gs,  eax
+  mov esp, 0x20000
+
+  jmp CODE_SEG:0x20200
+
+
+                 ; define boot sector           
+
+
+

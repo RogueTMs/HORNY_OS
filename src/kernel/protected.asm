@@ -3,9 +3,9 @@
 gdt_start:
   dq 0x0                           ; null descriptor
 gdt_code:
-  dq 0x30A60000000000
-gdt_data:
   dq 0xC2920000000000
+gdt_data:
+  dq 0x30A60000000000
 
 gdt_end:                           ; ??
 
