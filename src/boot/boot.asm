@@ -76,11 +76,8 @@ errmsglb:
 					    ; else go to end_loop
 
 
-InstallGDT:
-	pusha
-	lgdt 	[gdt_descriptor + 0x7c00]
-	popa
-	ret
+
+
 
 
 gdt_start:
@@ -109,7 +106,7 @@ gdt_descriptor:
 
 end_of_reading:
 
-call InstallGDT
+lgdt [gdt_descriptor + 0x7c00]
 
 mov	eax, cr0		; set bit 0 in cr0--enter pmode
 or	eax, 1

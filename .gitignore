@@ -6,3 +6,5 @@ os-dbg.bxrc
 *.tmp
 *.o
 bx_enh_dbg.ini
+src/kernel/kernel.o
+src/kernel/kernel.tmp
