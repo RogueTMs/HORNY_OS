@@ -4,5 +4,4 @@ os-dbg.bxrc
 *.bin
 *.img
 *.tmp
-*.o
 bx_enh_dbg.ini
