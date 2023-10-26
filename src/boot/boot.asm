@@ -9,10 +9,12 @@ xor     ch, ch           ; cylinder number
 xor     dh, dh           ; head number
 mov     cl, 0x1          ; starting sector number (from 2 to 18)
 read_loop:
+
 	;  384 * 1024 / 512 = 768 sectors
 	;  768 / 36 = 21.33 cyls
 	;  start = 0x20000
 	;  end   = 0x80000
+
 	mov		si, 0x03            ; error counter 
 	
 	read_num:
@@ -43,13 +45,10 @@ read_loop:
 		inc    	ch                  ; get next cyl
 		jmp   	read_loop	   		; read from next cyl
 
-
-
-
-;	mov ax, 0x2000                	    ; start from 0x20000
-;	mov es, ax                          ; es <- 0x2000
-;	xor dl, dl                          ; check sum
-;	xor bx, bx                          ; clear bx (for es)
+;	mov ax, 0x2000                	; start from 0x20000
+;	mov es, ax                      ; es <- 0x2000
+;	xor dl, dl                      ; check sum
+;	xor bx, bx                      ; clear bx (for es)
 ;		
 ;	addition:
 ;
@@ -73,42 +72,36 @@ errmsglb:
 	dec    si             		    ; dec error counter
 	cmp    si, 0x0      		    ; check if zero
 	jne    read_num       		    ; if not zero - retry
-					    ; else go to end_loop
+								    ; else go to end_loop
 
-
-
-
-
-
-gdt_start:
-  dq 0x0                           ; null descriptor
+gdt_start:							; null descriptor
+	dq 0x0							; qword - 64-bits containing zeros
 gdt_code:
-  dw 0xffff
-  dw 0x0
-  db 0x0
-  db 10011010b
-  db 11001111b
-  db 0x0
+	dw 0xffff						; first 16 bits - sets the limit
+	dw 0x0							; dword sets 0x0 0x0 - base adress
+	db 0x0							; dbytes sets 0x0 - base adress
+	db 10011010b                    ; sets accsess bytes
+	db 11001111b                    ; sets flags and completes 0FFFFFh limit value 
+	db 0x0							; dword sets 0x0 - base adress
 gdt_data:
-  dw 0xffff
-  dw 0x0
-  db 0x0
-  db 10010010b
-  db 11001111b
-  db 0x0
+	dw 0xffff						; first 16 bits - sets the limit -> 4 GB (0FFFFFh limit total)
+	dw 0x0							; dword sets 0x0 0x0 - base adress
+	db 0x0							; dbytes sets 0x0 - base adress
+	db 10010010b                    ; sets accsess bytes
+	db 11001111b                    ; sets flags and completes 0FFFFFh limit value 
+	db 0x0							; dword sets 0x0 - base adress
 
-gdt_end:
+gdt_end:							; in order to know the size of the gdt
 gdt_descriptor:
-  dw gdt_end - gdt_start - 1       ; labels arithmetic
-  dd gdt_start + 0x20000
-
+	dw gdt_end - gdt_start - 1		; size of the gdt
+	dd gdt_start + 0x20000
 
 
 end_of_reading:
 
-lgdt [gdt_descriptor + 0x7c00]
+lgdt [gdt_descriptor + 0x7c00]      ; cos ds is not setted -> add 0x7c00
 
-mov	eax, cr0		; set bit 0 in cr0--enter pmode
+mov	eax, cr0						; set 0th bit in cr0--enter pmode
 or	eax, 1
 mov	cr0, eax
 
