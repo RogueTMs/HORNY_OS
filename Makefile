@@ -36,7 +36,7 @@ readbin:
 	python src/boot/bin/Read_bin.py
 
 kernel:
-	gcc -m32 -ffreestanding -c -o src/boot/kernel.o src/boot/kernel.c
+	gcc -m32 -ffunction-sections -c -o src/boot/kernel.o src/boot/kernel.c
 	ld -m i386pe -o src/boot/kernel.tmp -Ttext 0x20200 src/boot/kernel.o
 	objcopy -I pe-i386 -O binary src/boot/kernel.tmp src/boot/kernel.bin
 
