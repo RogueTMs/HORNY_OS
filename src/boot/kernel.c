@@ -15,6 +15,18 @@
 #define HEIGHT 25
 
 
+// int check_overflow_len(int coord){
+// 	int coord = coord % LENGTH;
+// 	if (coord < 0) return coord + LENGTH;
+// 	return coord;
+// }
+
+// int check_overflow_height(int coord){
+// 	int coord = coord % HEIGHT;
+// 	if (coord < 0) return coord + HEIGHT;
+// 	return coord;
+// }
+
 void vga_clear_screen(){
 	short int* start = (short int*) START;
 	for (int index = 0; index < SIZE; index++){
@@ -23,9 +35,10 @@ void vga_clear_screen(){
 }
 
 void vga_print_char(char symbol, int x, int y){
+
 	short int bit_mask = 0b0000101000000000;
 	bit_mask |= (short int) symbol;
-	*((short int*) START + (y * 80 + x)) = bit_mask;  
+	*((short int*) START + (y * LENGTH + x)) = bit_mask;  
 }
 
 void vga_test_fill_screen(char symbol){
@@ -35,11 +48,34 @@ void vga_test_fill_screen(char symbol){
 		}
 	}
 }
-void vga_print_str(char* str, int x, int y){}
+
+void vga_print_str(char* str, int x, int y){
+	int index = 0;
+	int x_coord = x;
+	int y_coord = y;
+	int start = START;
+
+	while (str[index] != '\0'){
+		char curr = str[index++];
+		vga_print_char(curr, x_coord, y_coord);
+		x_coord++;
+		if (x_coord >= LENGTH){
+			y_coord++;
+			x_coord = 0;
+		}
+		if (y_coord >= HEIGHT){
+			;
+		}
+
+	}
+}
 
 void __main(){
 	vga_clear_screen();	
 	vga_print_char('G', 10, 10);
+	//*((short int*) START) = 0;
+
+
 	for (;;);
 }
 
