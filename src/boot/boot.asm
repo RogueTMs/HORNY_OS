@@ -99,6 +99,11 @@ gdt_descriptor:
 
 end_of_reading:
 
+
+
+xor ax, ax
+mov ds, ax
+
 lgdt [gdt_descriptor + 0x7c00]      ; cos ds is not setted -> add 0x7c00
 
 mov	eax, cr0						; set 0th bit in cr0--enter pmode
