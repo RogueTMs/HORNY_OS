@@ -27,6 +27,12 @@
 // 	return coord;
 // }
 
+
+int X;
+int Y;
+
+
+
 void vga_clear_screen(){
 	short int* start = (short int*) START;
 	for (int index = 0; index < SIZE; index++){
@@ -35,10 +41,11 @@ void vga_clear_screen(){
 }
 
 void vga_print_char(char symbol, int x, int y){
-
-	short int bit_mask = 0b0000101000000000;
-	bit_mask |= (short int) symbol;
-	*((short int*) START + (y * LENGTH + x)) = bit_mask;  
+	if (symbol != '\n') {
+		short int bit_mask = 0b0000101000000000;
+		bit_mask |= (short int) symbol;
+		*((short int*) START + (y * LENGTH + x)) = bit_mask;  
+	}
 }
 
 void vga_test_fill_screen(char symbol){
@@ -57,6 +64,9 @@ void vga_print_str(char* str, int x, int y){
 
 	while (str[index] != '\0'){
 		char curr = str[index++];
+		if (curr == '\n') {
+			x_coord = LENGTH;
+		}
 		vga_print_char(curr, x_coord, y_coord);
 		x_coord++;
 		if (x_coord >= LENGTH){
@@ -64,18 +74,34 @@ void vga_print_str(char* str, int x, int y){
 			x_coord = 0;
 		}
 		if (y_coord >= HEIGHT){
-			;
+			short int* start = (short int*) START;
+			for (int i = 0; i < SIZE - LENGTH; i++){
+				*((short int*) (start + i)) = *((short int*) (start + i + LENGTH));
+			}
+			y_coord = HEIGHT - 1;
+			vga_print_char(curr, x_coord, y_coord);
 		}
 
 	}
 }
 
+void init_printer(){
+	X = 0;
+	Y = 0;
+	vga_clear_screen();
+}
+
+void print(char* fmt, ...){
+}
+
 void __main(){
-	vga_clear_screen();	
-	vga_print_char('G', 10, 10);
-	//*((short int*) START) = 0;
+	// vga_clear_screen();	
+	// vga_print_char('G', 10, 10);
+	*((short int*) START) = 0;
+	// vga_print_str("q\ng\nve\nr\nt\ny\nu\ni\no\nqvd\nf\ng\nh\nj\nj\ng\n\nv\nf\nv\ng\nh\nj\nv\nj\nj\nk\nd", 0, 0);
 
-
+	// int stack_pointer;
+	// __asm__("movl %1, esp");
 	for (;;);
 }
 
