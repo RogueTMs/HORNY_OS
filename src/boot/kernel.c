@@ -29,14 +29,12 @@ void __main(){
                           _| |_  /     \\   ||     \n\
                             q===|       |===p     \n\
                                  \\_ o _/        \n\
-                                  ^   ^";
-	// print("%s", s);
-	// print("%%");
+                                  ^   ^";;
 
-	for (int i = 0; i < 1000; i++) {
-		print("abc");
+	for (int i = 0; i < SIZE - 1; i++) {
+		print("a");
 	}
-
+  print("b");
 	for (;;);
 }
 

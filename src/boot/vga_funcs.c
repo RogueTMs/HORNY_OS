@@ -2,23 +2,6 @@
 #include "utils_funcs.h"
 
 
-
-int getX() {
-    return X;
-}
-
-int getY() {
-    return Y;
-}
-
-void setX(int x) {
-    X = x;
-}
-
-void setY(int y) {
-    Y = y;
-}
-
 void init_printer(){
 	X = 0;
 	Y = 0;
@@ -33,7 +16,7 @@ void mem_zero(short int  * start, int len){
 
 void mem_cpy(short int  * src, short int  * dst, int len){
 	for (int i = 0; i < len; i++){
-		*((short int  *) (dst + i)) = *((short int  *) (src + i));
+		dst[i]= src[i];
 	}
 }
 
@@ -73,14 +56,17 @@ void vga_print_str(char* str, int x, int y){
 
 void scroll() {
 	short int  * start = (short int  *) START;
-	mem_cpy(start + 80, start, SIZE);
-	Y = HEIGHT - 1;
+	mem_cpy(start + LENGTH, start, SIZE - LENGTH);
+	mem_zero(start + SIZE - LENGTH, LENGTH);
+	// Y = HEIGHT - 1;
 }
 
 void scroll_check(int i) {
 	int y = Y + (X + i) / LENGTH;
+	// printNum(y, 2, 10);
 	if (y >= HEIGHT) {
-		int diff = y - HEIGHT + 1;
+		int mod = ((X + i) % LENGTH == 0) ? 0 : 1;
+		int diff = y - HEIGHT + mod;
 		for (int i = 0; i < diff; i++) {
 			scroll();
 		}

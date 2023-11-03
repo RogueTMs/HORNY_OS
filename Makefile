@@ -1,3 +1,5 @@
+files := $(wildcard src/boot/*.c)
+
 all: launch
 
 # If the first argument is "bootimg"...
@@ -37,9 +39,20 @@ readbin:
 
 kernel:
 	gcc -m32 -ffunction-sections -c -o src/boot/kernel.o src/boot/kernel.c
-	ld -m i386pe -o src/boot/kernel.tmp -Ttext 0x20200 src/boot/kernel.o
+	gcc -m32 -ffunction-sections -c -o src/boot/vga_funcs.o src/boot/vga_funcs.c
+	gcc -m32 -ffunction-sections -c -o src/boot/utils_funcs.o src/boot/utils_funcs.c
+	ld -m i386pe -o src/boot/kernel.tmp -Ttext 0x20200 src/boot/kernel.o src/boot/vga_funcs.o src/boot/utils_funcs.o
 	objcopy -I pe-i386 -O binary src/boot/kernel.tmp src/boot/kernel.bin
 
 	dd if=src/boot/kernel.bin of=src/boot/boot.img conv=notrunc seek=1
+
+
+# foo : $(files)
+
+# 	for file in $(files); do \
+# 		var := $(patsubst src, aaaa, $$file);\
+# 		echo var; \
+# 		# gcc -m32 -ffunction-sections -c -o $(patsubst %.c, %.o, $$file) $$file; \
+# 	done
 
 clean: 
