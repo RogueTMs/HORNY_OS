@@ -28,9 +28,9 @@ void mem_zero(short int* start, int len){
 	}
 }
 
-void mem_cpy(short int* start, short int* dest, int len){
+void mem_cpy(short int* src, short int* dst, int len){
 	for (int i = 0; i < len; i++){
-		*((short int*) (dest + i)) = *((short int*) (start + i));
+		*((short int*) (dst + i)) = *((short int*) (src + i));
 	}
 }
 
