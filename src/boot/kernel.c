@@ -9,6 +9,9 @@
 
 */
 
+// 
+
+
 #define SIZE 4000
 #define START 0xB8000
 #define LENGTH 80
@@ -17,12 +20,22 @@
 int X;
 int Y;
 
+void mem_zero(short int* start, int len){
+	for (int index = 0; index < len; index++){
+		*((short int*) start++) = 0;
+	}
+}
+
+void mem_cpy(short int* start, short int* dest, int len){
+	for (int i = 0; i < len; i++){
+		*((short int*) (dest + i)) = *((short int*) (start + i));
+	}
+}
 
 void vga_clear_screen(){
 	short int* start = (short int*) START;
-	for (int index = 0; index < SIZE; index++){
-		*((short int*) start++) = 0;
-	}
+	mem_zero(start, SIZE);
+	
 }
 
 void vga_print_char(char symbol, int x, int y){
@@ -44,9 +57,7 @@ void vga_test_fill_screen(char symbol){
 
 void scroll() {
 	short int* start = (short int*) START;
-	for (int i = 0; i < SIZE - LENGTH; i++){
-		*((short int*) (start + i)) = *((short int*) (start + i + LENGTH));
-	}
+	mem_cpy(start + 80, start, SIZE);
 	Y = HEIGHT - 1;
 }
 
@@ -79,7 +90,7 @@ void init_printer(){
 int len(char* s) {
 	int i = 0;
 	while (*(s + i++) != '\0');
-	return i;
+	return i -1;
 }
 
 void scroll_check(int i) {
@@ -144,12 +155,12 @@ void print(char* fmt, ...){
 	pointer += sizeof(char*);
 
 	while (*fmt != '\0'){
-		char curr = *fmt;
+		char curr = *fmt++;  //
 
 		if (curr == '%') {
 			int l;
 			int n;
-			switch (*++fmt)
+			switch (*fmt++)
 			{
 			case 's':
 				char* s = *((char**) pointer);
@@ -157,7 +168,7 @@ void print(char* fmt, ...){
 				l = len(s);
 				scroll_check(l);
 				vga_print_str(s, X, Y);
-				X = (X + l - 1) % LENGTH;
+				X = (X + l) % LENGTH;
 				break;
 			case 'd':
 				n = *((int*) pointer);
@@ -175,6 +186,8 @@ void print(char* fmt, ...){
 				break;
 
 			default:
+				scroll_check(1);
+				vga_print_char('%', X++, Y);
 				break;
 			}
 		} else {
@@ -187,7 +200,6 @@ void print(char* fmt, ...){
 				vga_print_char(curr, X++, Y);
 			}
 		}
-		fmt++;
 	}
 }
 
@@ -205,7 +217,16 @@ void __main(){
                             q===|       |===p     \n\
                                  \\_ o _/        \n\
                                   ^   ^";
-	print(s);
+	//print("%s", s);
+	// print("%%");
+
+	// for(int i =0; i<40; i++){
+	// 	for(int j = 0; j<i; j++){
+	// 		print(" ");
+	// 	}
+	// 	print("%d\n", i);
+	// }
+
 	for (;;);
 }
 
