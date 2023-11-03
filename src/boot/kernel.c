@@ -2,7 +2,7 @@
 
 - 80*25 - columns * lines 
 - RAM range [0xB8000 - 0xB8FA0) - 4000 in dec -> instant screen display
-- coords (x, y) -> 0xB8000 + 2*(y*80 + x) -> btw we use short int type that takes 2bytes
+- coords (x, y) -> 0xB8000 + 2*(y*80 + x) -> btw we use byte type that takes 2bytes
 -> 0xB8000 + (y*80 + x)  (defined after several experiments)
 - bit mask  | bgc    | fgc  |  symbol code  | <- bitwise OR or +
 -           |{1/0}000| 0000 |   10101010    |
@@ -16,6 +16,8 @@
 #define START 0xB8000
 #define LENGTH 80
 #define HEIGHT 25
+
+typedef char byte;
 
 int X;
 int Y;
@@ -155,7 +157,7 @@ void print(char* fmt, ...){
 	pointer += sizeof(char*);
 
 	while (*fmt != '\0'){
-		char curr = *fmt++;  //
+		char curr = *fmt++;  
 
 		if (curr == '%') {
 			int l;
@@ -217,7 +219,7 @@ void __main(){
                             q===|       |===p     \n\
                                  \\_ o _/        \n\
                                   ^   ^";
-	//print("%s", s);
+	print("%s", s);
 	// print("%%");
 
 	// for(int i =0; i<40; i++){
