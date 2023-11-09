@@ -44,7 +44,7 @@ kernel:
 	gcc -m32 -ffunction-sections -c -o src/boot/kernel.o src/boot/kernel.c
 	gcc -m32 -ffunction-sections -c -o src/boot/vga_funcs.o src/boot/vga_funcs.c
 	gcc -m32 -ffunction-sections -c -o src/boot/utils_funcs.o src/boot/utils_funcs.c
-    gcc -m32 -ffunction-sections -c -o src/boot/tramplins.o src/boot/tramplins.c
+	gcc -m32 -ffunction-sections -c -o src/boot/tramplins.o src/boot/tramplins.c
 
 	ld -m i386pe -o src/boot/kernel.tmp -Ttext 0x20200 src/boot/kernel.o src/boot/vga_funcs.o src/boot/utils_funcs.o src/boot/tramplins.o
 	objcopy -I pe-i386 -O binary src/boot/kernel.tmp src/boot/kernel.bin
@@ -52,7 +52,7 @@ kernel:
 	dd if=src/boot/kernel.bin of=src/boot/boot.img conv=notrunc seek=1
 
 task5:
-    ld -m i386pe -o src/boot/kernel.tmp -Ttext 0x20200 src/boot/kernel.o src/boot/vga_funcs.o src/boot/utils_funcs.o
+	ld -m i386pe -o src/boot/kernel.tmp -Ttext 0x20200 src/boot/kernel.o src/boot/vga_funcs.o src/boot/utils_funcs.o
 
 
 

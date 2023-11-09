@@ -31,8 +31,9 @@ void __main(){
                             q===|       |===p     \n\
                                  \\_ o _/        \n\
                                   ^   ^";
-    print("%s", s);
-    kernel_panic("%x", 0x13);
-//	for (;;);
+//    print("%s", s);
+    __asm__ ("int $0x13");
+//    kernel_panic("%x", 0x13);
+	for (;;);
 }
 
