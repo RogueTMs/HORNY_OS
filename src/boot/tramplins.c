@@ -5,7 +5,6 @@
 static void panic_handler(int vector) {
     kernel_panic("Unhandled interrupt %x", vector);
 }
-GateDescriptor* idt = (GateDescriptor*) kernel_malloc(sizeof(GateDescriptor) * 256);
 
 static void tramplin_00(){panic_handler(0x00);}
 static void tramplin_01(){panic_handler(0x01);}
@@ -270,34 +269,45 @@ void initGate(GateDescriptor* gd) {
     gd->reserved1 = 1;
 }
 
-void init(DIDT* didt1, int size, void* address) {
+void init_(DIDT* didt1, int size, void* address) {
     didt1->idt_size = size;
     didt1->idt_address = (u32) address;
 }
 
 
+void init_IDT(){
+
+    GateDescriptor* idt = (GateDescriptor*) kernel_malloc(sizeof(GateDescriptor) * 256);
 
 
-for (int vector = 0; vector < IDT_SIZE; vector++) {
-    byte* handler = tramplins[vector];
-    u16 low_16_bits = (u16) handler;
-    u16 high_16_bits = (u16) ((u32) handler) >> 16);
-    initGate(idt[vector]);
-    idt[vector].offset_1 = low_16_bits;
-    idt[vector].selector = 0x8;
-    idt[vector].zero = 0;
-    idt[vector].gate_type = 0xE;
-    idt[vector].dpl = 0;
-    idt[vector].offset_2 = high_16_bits;
+    for (int vector = 0; vector < IDT_SIZE; vector++) {
+        byte* handler = tramplins[vector];
+        u16 low_16_bits = (u16) handler;
+        u16 high_16_bits = (u16) (((u32) handler) >> 16);
+        initGate(idt + vector);
+        idt[vector].offset_1 = low_16_bits;
+        idt[vector].selector = 0x8;
+        idt[vector].zero = 0;
+        idt[vector].gate_type = 0xE;
+        idt[vector].dpl = 0;
+        idt[vector].offset_2 = high_16_bits;
+    }
+
+    DIDT didt;
+    init(&didt, sizeof(GateDescriptor*) * 256 - 1, idt);
+
+    u16 adr = (u16) &didt;
+
+    char *output;
+    asm (
+        "[BITS 32]"
+        "mov %%eax, %[q]"
+        "lidt %%eax" 
+        : 
+        : [q] "I" (adr));
+
+    
+
 }
-
-DIDT didt;
-init(&didt, sizeof(GateDescriptor*) * 256 - 1, idt);
-
-u16 adr = (u16) &didt;
-
-
-__asm__ ("movl %%eax, %[adr]"
-         "lidt %%eax": [adr] "=m" (adr));
 
 
