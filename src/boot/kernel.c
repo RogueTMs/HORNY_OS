@@ -1,5 +1,6 @@
 #include "vga_funcs.h"
 #include "utils_funcs.h"
+#include "kernel_panic.c"
 
 
 /*
@@ -29,12 +30,9 @@ void __main(){
                           _| |_  /     \\   ||     \n\
                             q===|       |===p     \n\
                                  \\_ o _/        \n\
-                                  ^   ^";;
-
-	for (int i = 0; i < SIZE - 1; i++) {
-		print("a");
-	}
-  print("b");
-	for (;;);
+                                  ^   ^";
+    print("%s", s);
+    kernel_panic("%x", 0x13);
+//	for (;;);
 }
 

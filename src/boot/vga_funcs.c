@@ -97,56 +97,61 @@ void printNum(int x, int len, int base) {
 	}
 }
 
+
+void print_impl(char* fmt, char* ptr) {
+    while (*fmt != '\0'){
+        char curr = *fmt++;
+
+        if (curr == '%') {
+            int l;
+            int n;
+            switch (*fmt++)
+            {
+                case 's':
+                    char* s = *((char**) ptr);
+                    ptr += sizeof(char*);
+                    l = len(s);
+                    scroll_check(l);
+                    vga_print_str(s, X, Y);
+                    X = (X + l) % LENGTH;
+                    break;
+                case 'd':
+                    n = *((int*) ptr);
+                    ptr += sizeof(int);
+                    l = numLen(n, 10);
+                    scroll_check(l);
+                    printNum(n, l, 10);
+                    break;
+                case 'x':
+                    n = *((int*) ptr);
+                    ptr += sizeof(int);
+                    l = numLen(n, 16);
+                    scroll_check(l);
+                    printNum(n, l, 16);
+                    break;
+
+                default:
+                    scroll_check(1);
+                    vga_print_char('%', X++, Y);
+                    break;
+            }
+        } else {
+            if (curr == '\n') {
+                scroll_check(LENGTH);
+                Y++;
+                X = 0;
+            } else {
+                scroll_check(1);
+                vga_print_char(curr, X++, Y);
+            }
+        }
+    }
+}
+
+
 void print(char* fmt, ...){
 	char* pointer = (void*) &fmt;
 	pointer += sizeof(char*);
-
-	while (*fmt != '\0'){
-		char curr = *fmt++;  
-
-		if (curr == '%') {
-			int l;
-			int n;
-			switch (*fmt++)
-			{
-			case 's':
-				char* s = *((char**) pointer);
-				pointer += sizeof(char*);
-				l = len(s);
-				scroll_check(l);
-				vga_print_str(s, X, Y);
-				X = (X + l) % LENGTH;
-				break;
-			case 'd':
-				n = *((int*) pointer);
-				pointer += sizeof(int);
-				l = numLen(n, 10);
-				scroll_check(l);
-				printNum(n, l, 10);
-				break;
-			case 'x':
-				n = *((int*) pointer);
-				pointer += sizeof(int);
-				l = numLen(n, 16);
-				scroll_check(l);
-				printNum(n, l, 16);
-				break;
-
-			default:
-				scroll_check(1);
-				vga_print_char('%', X++, Y);
-				break;
-			}
-		} else {
-			if (curr == '\n') {
-				scroll_check(LENGTH);
-				Y++;
-				X = 0;
-			} else { 
-				scroll_check(1);
-				vga_print_char(curr, X++, Y);
-			}
-		}
-	}
+    print_impl(fmt, pointer);
 }
 

@@ -34,6 +34,9 @@ concat:
 genbin:
 	python src/boot/bin/Gener_bin.py
 
+gentramps:
+	python src/boot/tramplin_generator.py
+
 readbin:
 	python src/boot/bin/Read_bin.py
 
@@ -41,10 +44,18 @@ kernel:
 	gcc -m32 -ffunction-sections -c -o src/boot/kernel.o src/boot/kernel.c
 	gcc -m32 -ffunction-sections -c -o src/boot/vga_funcs.o src/boot/vga_funcs.c
 	gcc -m32 -ffunction-sections -c -o src/boot/utils_funcs.o src/boot/utils_funcs.c
-	ld -m i386pe -o src/boot/kernel.tmp -Ttext 0x20200 src/boot/kernel.o src/boot/vga_funcs.o src/boot/utils_funcs.o
+    gcc -m32 -ffunction-sections -c -o src/boot/tramplins.o src/boot/tramplins.c
+
+	ld -m i386pe -o src/boot/kernel.tmp -Ttext 0x20200 src/boot/kernel.o src/boot/vga_funcs.o src/boot/utils_funcs.o src/boot/tramplins.o
 	objcopy -I pe-i386 -O binary src/boot/kernel.tmp src/boot/kernel.bin
 
 	dd if=src/boot/kernel.bin of=src/boot/boot.img conv=notrunc seek=1
+
+task5:
+    ld -m i386pe -o src/boot/kernel.tmp -Ttext 0x20200 src/boot/kernel.o src/boot/vga_funcs.o src/boot/utils_funcs.o
+
+
+
 
 
 # foo : $(files)

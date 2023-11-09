@@ -6,7 +6,7 @@ typedef unsigned int u32;
 
 typedef unsigned short u16;
 
-const void* NULL = (void*) 0;
+typedef char u8;
 
 
 #define START 0x100000
@@ -21,7 +21,6 @@ const void* NULL = (void*) 0;
 void* curr = START;
 
 
-int isNull(void* ptr);
 byte* kernel_malloc(u32 size);
 byte* kernel_calloc(u32 size);
 byte* kernel_realloc(void* old_addr, u32 new_size);

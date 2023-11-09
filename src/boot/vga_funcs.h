@@ -18,3 +18,4 @@ void scroll();
 void scroll_check(int i);
 void print(char* fmt, ...);
 void printNum(int x, int len, int base);
+void print_impl(char* fmt, char* ptr);
