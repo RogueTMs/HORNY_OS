@@ -1,5 +1,5 @@
 #include "kernel_alloc.h"
-#include "kernel_panic.c"
+#include "kernel_panic.h"
 #include "tramplins.h"
 
 static void panic_handler(int vector) {
@@ -294,11 +294,10 @@ void init_IDT(){
     }
 
     DIDT didt;
-    init(&didt, sizeof(GateDescriptor*) * 256 - 1, idt);
+    init_(&didt, sizeof(GateDescriptor) * 256 - 1, idt);
 
     u16 adr = (u16) &didt;
 // TODO: lidt %0 : : "m" (adr)" - It works
-    char *output;
     asm (
         "lidt %0"
         : 

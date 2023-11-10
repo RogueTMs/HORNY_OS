@@ -22,11 +22,10 @@ typedef struct {
 
 #define IDT_SIZE 256
 
-
-void initGate();
-void init(DIDT* didt, int size, void* address);
-void init_IDT();
 static void panic_handler(int vector);
+void initGate(GateDescriptor* gd);
+void init_(DIDT* didt, int size, void* address);
+void init_IDT();
 static void tramplin_00();
 static void tramplin_01();
 static void tramplin_02();

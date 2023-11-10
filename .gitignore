@@ -8,3 +8,4 @@ os-dbg.bxrc
 bx_enh_dbg.ini
 src/kernel/kernel.o
 src/kernel/kernel.tmp
+.idea/workspace.xml
