@@ -1,5 +1,4 @@
 #include "kernel_alloc.h"
-#include "kernel_panic.h"
 
 void myMemset(void* ptr, int size) {
     for (int i = 0; i < size; i++) {
@@ -21,7 +20,7 @@ byte* kernel_malloc(u32 size) {
 
 byte* kernel_calloc(u32 size) {
     byte* res = kernel_malloc(size);
-    myMemset(res, size);
+    memset(res, size);
     return res; 
 }
 
@@ -37,4 +36,4 @@ byte* kernel_realloc(void* old_addr, u32 new_size) {
     }
 }
 
-void  kernel_free(void* addr){};
+void  kernel_free(void* addr);

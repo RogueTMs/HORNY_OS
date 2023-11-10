@@ -1,6 +1,6 @@
 #include "vga_funcs.h"
 #include "utils_funcs.h"
-#include "kernel_panic.h"
+#include "kernel_panic.c"
 
 
 /*
@@ -32,6 +32,8 @@ void __main(){
                                  \\_ o _/        \n\
                                   ^   ^";
 //    print("%s", s);
+    __asm__ ("int $0x13");
+//    kernel_panic("%x", 0x13);
 	for (;;);
 }
 
