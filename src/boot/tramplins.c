@@ -297,14 +297,12 @@ void init_IDT(){
     init(&didt, sizeof(GateDescriptor*) * 256 - 1, idt);
 
     u16 adr = (u16) &didt;
-
+// TODO: lidt %0 : : "m" (adr)" - It works
     char *output;
     asm (
-        "[BITS 32]"
-        "mov %%eax, %[q]"
-        "lidt %%eax" 
+        "lidt %0"
         : 
-        : [q] "I" (adr));
+        : "m" (adr));
 
     
 

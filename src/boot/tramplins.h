@@ -25,6 +25,7 @@ typedef struct {
 
 void initGate();
 void init(DIDT* didt, int size, void* address);
+void init_IDT();
 static void panic_handler(int vector);
 static void tramplin_00();
 static void tramplin_01();
