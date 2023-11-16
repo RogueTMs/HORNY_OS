@@ -4,11 +4,13 @@
 typedef struct {
     u16 offset_1;
     u16 selector;
-    u8 zero : 8;
-    u8 gate_type : 4;
-    u8 reserved0 : 1;
-    u8 dpl : 2;
-    u8 reserved1 : 1;
+    u8 zeros;
+    u8 flags;
+    // u8 zero;
+    // u8 gate_type : 4;
+    // u8 reserved0 : 1;
+    // u8 dpl : 2;
+    // u8 reserved1 : 1;
     u16 offset_2;
 } GateDescriptor;
 

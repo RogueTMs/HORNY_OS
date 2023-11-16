@@ -5,7 +5,6 @@
 #include "tramplins.h"
 
 
-
 /*
 
 - 80*25 - columns * lines 
@@ -22,6 +21,7 @@
 
 void __main(){
 	init_printer();
+  init_IDT();
 	char* s =
 "\n\n\n\n\n\n\n \
                                     ______________\n\
@@ -34,7 +34,9 @@ void __main(){
                             q===|       |===p     \n\
                                  \\_ o _/        \n\
                                   ^   ^";
-  int a = 1 / 0;
+  // print("%s", s);
+  asm("int $0x42");
+  // printNum(0x0, numLen(0, 10), 10);
 	for (;;);
 }
 

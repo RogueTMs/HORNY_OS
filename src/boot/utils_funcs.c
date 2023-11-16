@@ -21,6 +21,9 @@ int power(int x, int y) {
 }
 
 int numLen(int x, int base) {
+	if (x == 0) {
+		return 1;
+	}
 	int c = x;
 	int len = 0;
 	while (c > 0) {
