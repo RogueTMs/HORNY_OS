@@ -1,6 +1,9 @@
 #include "vga_funcs.h"
 #include "utils_funcs.h"
-#include "kernel_panic.c"
+#include "kernel_panic.h"
+#include "kernel_alloc.h"
+#include "tramplins.h"
+
 
 
 /*
@@ -31,9 +34,7 @@ void __main(){
                             q===|       |===p     \n\
                                  \\_ o _/        \n\
                                   ^   ^";
-//    print("%s", s);
-    __asm__ ("int $0x13");
-//    kernel_panic("%x", 0x13);
+  int a = 1 / 0;
 	for (;;);
 }
 

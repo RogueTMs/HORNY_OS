@@ -18,7 +18,8 @@ typedef char u8;
 // byte* curr = (byte*) START;
 // byte* next = (byte*) START;
 
-void* curr = (void*) ALLOC_START;
+static void* curr = (void*) ALLOC_START;
+static byte* const end = (void*) ALLOC_END;
 
 
 byte* kernel_malloc(u32 size);

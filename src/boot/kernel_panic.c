@@ -1,8 +1,9 @@
 #include "vga_funcs.h"
 #include "utils_funcs.h"
+#include "kernel_panic.h"
 
 void kernel_panic(char* fmt, ...) {
-    __asm__ ("cli");
+    asm ("cli");
     init_printer();
     char* pointer = (void*) &fmt;
     pointer += sizeof(char*);
