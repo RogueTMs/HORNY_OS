@@ -25,14 +25,10 @@ byte* kernel_calloc(u32 size) {
 
 
 byte* kernel_realloc(void* old_addr, u32 new_size) {
-    if ((byte*)old_addr + new_size < end) {
-        byte* tmp = curr;
-        curr = (byte*) old_addr + new_size;
-        mem_cpy(old_addr, tmp, new_size);
-        return tmp;
-    } else {
-        kernel_panic("PANIC IN REALLOC");
-    }
+
+    byte* new_addr = kernel_malloc(new_size);
+    mem_cpy(old_addr, new_addr, new_size);
+    return new_addr;
 }
 
 void  kernel_free(void* addr){};

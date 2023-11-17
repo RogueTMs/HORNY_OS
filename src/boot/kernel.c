@@ -35,7 +35,8 @@ void __main(){
                                  \\_ o _/        \n\
                                   ^   ^";
   // print("%s", s);
-  asm("int $0x42");
+  asm("sti");
+  // int i = 1 / 0;
   // printNum(0x0, numLen(0, 10), 10);
 	for (;;);
 }
