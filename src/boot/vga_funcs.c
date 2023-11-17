@@ -1,5 +1,6 @@
 #include "vga_funcs.h"
 #include "utils_funcs.h"
+#include "mem_funcs.h"
 
 
 void init_printer(){
@@ -8,17 +9,6 @@ void init_printer(){
 	vga_clear_screen();
 }
 
-void mem_zero(short int  * start, int len){
-	for (int index = 0; index < len; index++){
-		*((short int  *) start++) = 0;
-	}
-}
-
-void mem_cpy(short int  * src, short int  * dst, int len){
-	for (int i = 0; i < len; i++){
-		dst[i]= src[i];
-	}
-}
 
 void vga_clear_screen(){
 	short int  * start = (short int  *) START;

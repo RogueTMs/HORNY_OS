@@ -18,13 +18,12 @@ typedef char u8;
 // byte* curr = (byte*) START;
 // byte* next = (byte*) START;
 
-static void* curr = (void*) ALLOC_START;
-static byte* const end = (void*) ALLOC_END;
+
 
 
 byte* kernel_malloc(u32 size);
 byte* kernel_calloc(u32 size);
 byte* kernel_realloc(void* old_addr, u32 new_size);
 void  kernel_free(void* addr);
-void myMemset(byte* ptr, int size);
+// void myMemset(byte* ptr, int size);
  
