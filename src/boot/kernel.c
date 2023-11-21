@@ -3,6 +3,8 @@
 #include "kernel_panic.h"
 #include "kernel_alloc.h"
 #include "tramplins.h"
+#include "pics.h"
+
 
 
 /*
@@ -35,7 +37,9 @@ void __main(){
                                  \\_ o _/        \n\
                                   ^   ^";
   // print("%s", s);
-  asm("sti");
+  // init_pics(1, 1);
+  extern void notsti();
+  notsti();
   // int i = 1 / 0;
   // printNum(0x0, numLen(0, 10), 10);
 	for (;;);
