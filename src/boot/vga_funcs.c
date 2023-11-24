@@ -3,6 +3,15 @@
 #include "mem_funcs.h"
 
 
+#define SIZE 4000
+#define START 0xB8000
+#define LENGTH 80
+#define HEIGHT 25
+
+static int X;
+static int Y;
+
+
 void init_printer(){
 	X = 0;
 	Y = 0;
@@ -11,16 +20,16 @@ void init_printer(){
 
 
 void vga_clear_screen(){
-	short int  * start = (short int  *) START;
-	mem_zero(start, SIZE);
+	short* start = (short*) START;
+	myMemset(start, SIZE * sizeof(short));
 	
 }
 
 void vga_print_char(char symbol, int x, int y){
 	if (symbol != '\n') {
 		short int bit_mask = 0b0000101000000000;
-		bit_mask |= (short int  ) symbol;
-		*((short int  *) START + (y * LENGTH + x)) = bit_mask;  
+		bit_mask |= (short) symbol;
+		*((short*) START + (y * LENGTH + x)) = bit_mask;  
 	}
 }
 
@@ -45,9 +54,9 @@ void vga_print_str(char* str, int x, int y){
 }
 
 void scroll() {
-	short int  * start = (short int  *) START;
-	mem_cpy(start + LENGTH, start, SIZE - LENGTH);
-	mem_zero(start + SIZE - LENGTH, LENGTH);
+	short* start = (short*) START;
+	mem_cpy(start + LENGTH, start, sizeof(short) * (SIZE - LENGTH));
+	myMemset(start + SIZE - LENGTH, sizeof(short) * LENGTH);
 	// Y = HEIGHT - 1;
 }
 

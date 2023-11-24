@@ -1,19 +1,13 @@
 #include "mem_funcs.h"
 
-void mem_zero(short int* start, int len){
-	for (int index = 0; index < len; index++){
-		*((short int*) start++) = 0;
-	}
-}
-
-void mem_cpy(short int* src, short int* dst, int len){
+void mem_cpy(void* src, void* dst, int len){
 	for (int i = 0; i < len; i++){
-		dst[i]= src[i];
+		*((byte*) dst + i) = *((byte*) src + i);
 	}
 }
 
-void myMemset(byte* ptr, int size) {
+void myMemset(void* ptr, int size) {
     for (int i = 0; i < size; i++) {
-        *((byte*)ptr + i) = 0;
+        *((byte*) ptr + i) = 0;
     }
 }

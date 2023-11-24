@@ -35,11 +35,15 @@ void __main(){
                             q===|       |===p     \n\
                                  \\_ o _/        \n\
                                   ^   ^";
-  // print("%s", s);
+  // for (int i = 0; i < 4000; i++) {
+  //   print('?');
+  // }
+  // print("b");
+  // vga_print_char('A', 0, 0);
   // init_pics(1, 1);
   // int i = 1 / 0;
   // printNum(0x0, numLen(0, 10), 10);
-  init_pics(0x20, 0x28);
+  // init_pics(0x20, 0x28);
   asm("sti");
 	for (;;);
 }
