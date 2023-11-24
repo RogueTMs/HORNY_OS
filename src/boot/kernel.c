@@ -20,7 +20,6 @@
 
 // 
 
-
 void __main(){
 	init_printer();
   init_IDT();
@@ -38,10 +37,10 @@ void __main(){
                                   ^   ^";
   // print("%s", s);
   // init_pics(1, 1);
-  extern void notsti();
-  notsti();
   // int i = 1 / 0;
   // printNum(0x0, numLen(0, 10), 10);
+  init_pics(0x20, 0x28);
+  asm("sti");
 	for (;;);
 }
 
