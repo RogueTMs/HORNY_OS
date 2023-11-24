@@ -1,7 +1,6 @@
 #include "kernel_alloc.h"
 #include "kernel_panic.h"
 #include "tramplins.h"
-#include "vga_funcs.h"
 
 #pragma pack(push, 1)
 typedef struct {
@@ -11,7 +10,6 @@ typedef struct {
     u8 flags;
     u16 offset_2;
 } GateDescriptor;
-
 
 typedef struct {
     u16 idt_size;

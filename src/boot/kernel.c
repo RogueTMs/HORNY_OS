@@ -1,7 +1,4 @@
 #include "vga_funcs.h"
-#include "utils_funcs.h"
-#include "kernel_panic.h"
-#include "kernel_alloc.h"
 #include "tramplins.h"
 #include "pics.h"
 
@@ -43,7 +40,7 @@ void __main(){
   // init_pics(1, 1);
   // int i = 1 / 0;
   // printNum(0x0, numLen(0, 10), 10);
-  // init_pics(0x20, 0x28);
+  init_pics();
   asm("sti");
 	for (;;);
 }

@@ -1,5 +1,8 @@
 #pragma once
 
-void init_pics(int pic1, int pic2);
+typedef char byte;
+typedef unsigned short u16;
+
+void init_pics();
 byte inb(u16 port);
 void outb(u16 port, byte data);
