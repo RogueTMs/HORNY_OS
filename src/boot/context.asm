@@ -258,7 +258,7 @@
 [GLOBAL _tramplin_fe]
 [GLOBAL _tramplin_ff]
 [EXTERN _panic_handler]
-
+[GLOBAL _experiment]
 
 collect_context:
 	push ds
@@ -266,47 +266,60 @@ collect_context:
 	push fs
 	push gs
 	pusha
+	push esp
 
 	extern _panic_handler
 	call _panic_handler
 
+	pop eax
 	popa
 	pop gs
 	pop fs
 	pop es
 	pop ds
+	pop eax
+	pop eax
 	iretd
+	; hlt
 
 
 _tramplin_00:
 	push 0x0
+	push 0x0
 	jmp collect_context
 
 _tramplin_01:
+	push 0x0
 	push 0x1
 	jmp collect_context
 
 _tramplin_02:
+	push 0x0
 	push 0x2
 	jmp collect_context
 
 _tramplin_03:
+	push 0x0
 	push 0x3
 	jmp collect_context
 
 _tramplin_04:
+	push 0x0
 	push 0x4
 	jmp collect_context
 
 _tramplin_05:
+	push 0x0
 	push 0x5
 	jmp collect_context
 
 _tramplin_06:
+	push 0x0
 	push 0x6
 	jmp collect_context
 
 _tramplin_07:
+	push 0x0
 	push 0x7
 	jmp collect_context
 
@@ -315,6 +328,7 @@ _tramplin_08:
 	jmp collect_context
 
 _tramplin_09:
+	push 0x0
 	push 0x9
 	jmp collect_context
 
@@ -339,10 +353,12 @@ _tramplin_0e:
 	jmp collect_context
 
 _tramplin_0f:
+	push 0x0
 	push 0xf
 	jmp collect_context
 
 _tramplin_10:
+	push 0x0
 	push 0x10
 	jmp collect_context
 
@@ -351,14 +367,17 @@ _tramplin_11:
 	jmp collect_context
 
 _tramplin_12:
+	push 0x0
 	push 0x12
 	jmp collect_context
 
 _tramplin_13:
+	push 0x0
 	push 0x13
 	jmp collect_context
 
 _tramplin_14:
+	push 0x0
 	push 0x14
 	jmp collect_context
 
@@ -367,30 +386,37 @@ _tramplin_15:
 	jmp collect_context
 
 _tramplin_16:
+	push 0x0
 	push 0x16
 	jmp collect_context
 
 _tramplin_17:
+	push 0x0
 	push 0x17
 	jmp collect_context
 
 _tramplin_18:
+	push 0x0
 	push 0x18
 	jmp collect_context
 
 _tramplin_19:
+	push 0x0
 	push 0x19
 	jmp collect_context
 
 _tramplin_1a:
+	push 0x0
 	push 0x1a
 	jmp collect_context
 
 _tramplin_1b:
+	push 0x0
 	push 0x1b
 	jmp collect_context
 
 _tramplin_1c:
+	push 0x0
 	push 0x1c
 	jmp collect_context
 
@@ -403,6 +429,7 @@ _tramplin_1e:
 	jmp collect_context
 
 _tramplin_1f:
+	push 0x0
 	push 0x1f
 	jmp collect_context
 
@@ -1526,3 +1553,13 @@ _tramplin_ff:
 	push 0xff
 	jmp collect_context
 
+_experiment:
+  mov eax, 1
+  mov ecx, 2
+  mov edx, 3
+  mov ebx, 4
+  mov esi, 5
+  mov edi, 6
+  mov ebp, 7
+  int 42
+  hlt

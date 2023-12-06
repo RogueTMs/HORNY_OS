@@ -1,5 +1,4 @@
 #include "vga_funcs.h"
-#include "utils_funcs.h"
 #include "kernel_panic.h"
 
 void kernel_panic(char* fmt, ...) {
@@ -8,6 +7,6 @@ void kernel_panic(char* fmt, ...) {
     char* pointer = (void*) &fmt;
     pointer += sizeof(char*);
     print_impl(fmt, pointer);
-    for (;;);
+    for(;;);
 }
 

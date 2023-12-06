@@ -19,19 +19,6 @@ typedef struct {
 
 #define IDT_SIZE 256
 
-
-void panic_handler(u32 edi, u32 esi, u32 ebp, u32 esp, u32 ebx, u32 edx, u32 ecx, u32 eax, u16 gs, u16 fs, \
- u16 es, u16 ds, u32 vector, u32 errorCode, u32 eip, u16 cs, u32 eflags, u32 process_esp, u16 ss) {
-    switch (vector) {
-        case 0x20:
-            timer_interrupt(edi, esi, ebp, esp, ebx, edx, ecx, eax, gs, fs, es, ds, vector, errorCode, eip, cs, eflags, process_esp, ss);
-            break;
-        default:
-            default_handler(edi, esi, ebp, esp, ebx, edx, ecx, eax, gs, fs, es, ds, vector, errorCode, eip, cs, eflags, process_esp, ss);
-            break;
-    }
-}
-
 void tramplin_00();
 void tramplin_01();
 void tramplin_02();
@@ -309,7 +296,7 @@ void init_IDT(){
         GateDescriptor tmp;
         tmp.offset_1 = low_16_bits;
         tmp.selector = 0x8;
-        if (vector < 32) {
+        if (vector <= 32) {
             tmp.flags = 0b10001111;
         } else {
             tmp.flags = 0b10001110;

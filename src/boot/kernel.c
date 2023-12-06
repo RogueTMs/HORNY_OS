@@ -17,6 +17,8 @@
 
 // 
 
+void experiment();
+
 void __main(){
 	init_printer();
   init_IDT();
@@ -37,10 +39,11 @@ void __main(){
   // }
   // print("b");
   // vga_print_char('A', 0, 0);
-  // init_pics(1, 1);
   // printNum(0x0, numLen(0, 10), 10);
   init_pics();
-  // asm("sti");
-	for (;;);
+  // experiment();
+  asm("sti");
+	asm("hlt");
+  for (;;);
 }
 

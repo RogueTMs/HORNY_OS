@@ -5,19 +5,30 @@
 static u32 counter = 0;
 
 
-void default_handler(u32 edi, u32 esi, u32 ebp, u32 esp, u32 ebx, u32 edx, u32 ecx, u32 eax, u16 gs, u16 fs, \
-                     u16 es, u16 ds, u32 vector, u32 errorCode, u32 eip, u16 cs, u32 eflags, u32 process_esp, u16 ss) {
-    kernel_panic("Kernel panic: unhadled interrupt %d. Context:\n\
-  EAX = %d ECX = %d EDX = %d EBX = %d\n\
-  ESP = %d EBP = %d ESI = %d EDI = %d\n\
-  DS = %d ES = %d FS = %d GS = %d\n\
-  CS = %d SS = %d EIP = %d\n\
-  EFLAGS (interrupted) = %d error code = %d", vector, eax, ecx, edx, ebx, esp, ebp, esi, edi, ds, es, fs, gs, cs, ss, eip,\
-    eflags, errorCode);
+
+
+void panic_handler(context* ctx) {
+    switch (ctx->vector) {
+        case 0x20:
+            timer_interrupt(ctx);
+            break;
+        default:
+            default_handler(ctx);
+            break;
+    }
 }
 
-void timer_interrupt(u32 edi, u32 esi, u32 ebp, u32 esp, u32 ebx, u32 edx, u32 ecx, u32 eax, u16 gs, u16 fs, u16 es, u16 ds,\
-                     u32 vector, u32 errorCode, u32 eip, u16 cs, u32 eflags, u32 process_esp, u16 ss) {
-    init_printer();
+
+void default_handler(context* ctx) {
+    kernel_panic("Kernel panic: unhadled interrupt %x. Context:\n\
+  EAX = %x ECX = %x EDX = %x EBX = %x\n\
+  ESP = %x EBP = %x ESI = %x EDI = %x\n\
+  DS = %x ES = %x FS = %x GS = %x\n\
+  CS = %x SS = %x EIP = %x\n\
+  EFLAGS (interrupted) = %x error code = %x", ctx->vector, ctx->eax, ctx->ecx, ctx->edx, ctx->ebx, ctx->esp, ctx->ebp, ctx->esi, ctx->edi, ctx->ds, ctx->es, ctx->fs, ctx->gs, ctx->cs,\
+   ctx->ss, ctx->eip, ctx->eflags, ctx->errorCode);
+}
+
+void timer_interrupt(context* ctx) {
     print("%d ", counter++);
 }
