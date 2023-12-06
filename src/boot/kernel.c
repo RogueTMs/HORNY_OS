@@ -44,8 +44,7 @@ void __main(){
   // experiment();
   asm("sti");
   for (int i = 0;;i++) {
-    print("*");
+    print("%d", i);
   }
-  // for(;;);
 }
 

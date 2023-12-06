@@ -33,5 +33,5 @@ void default_handler(context* ctx) {
 
 void timer_interrupt(context* ctx) {
     // print("%d ", counter++);
-    print(" ");
+    print("*");
 }

@@ -262,7 +262,7 @@
 
 collect_context:
 	mov	al,20h
-	out	20h,al ;
+	out	20h, al ;
 	push ds
 	push es
 	push fs
@@ -273,14 +273,15 @@ collect_context:
 	extern _panic_handler
 	call _panic_handler
 
-	pop eax
+	pop esp
 	popa
 	pop gs
 	pop fs
 	pop es
 	pop ds
-	pop eax
-	pop eax
+	add esp, 8
+	; pop eax
+	; pop eax
 	iretd
 
 
