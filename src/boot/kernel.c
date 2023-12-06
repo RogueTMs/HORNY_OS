@@ -43,7 +43,9 @@ void __main(){
   init_pics();
   // experiment();
   asm("sti");
-	asm("hlt");
-  for (;;);
+  for (int i = 0;;i++) {
+    print("*");
+  }
+  // for(;;);
 }
 

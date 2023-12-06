@@ -261,6 +261,8 @@
 [GLOBAL _experiment]
 
 collect_context:
+	mov	al,20h
+	out	20h,al ;
 	push ds
 	push es
 	push fs
@@ -280,7 +282,6 @@ collect_context:
 	pop eax
 	pop eax
 	iretd
-	; hlt
 
 
 _tramplin_00:

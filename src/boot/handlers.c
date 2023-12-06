@@ -20,6 +20,7 @@ void panic_handler(context* ctx) {
 
 
 void default_handler(context* ctx) {
+    asm("cli");
     kernel_panic("Kernel panic: unhadled interrupt %x. Context:\n\
   EAX = %x ECX = %x EDX = %x EBX = %x\n\
   ESP = %x EBP = %x ESI = %x EDI = %x\n\
@@ -27,8 +28,10 @@ void default_handler(context* ctx) {
   CS = %x SS = %x EIP = %x\n\
   EFLAGS (interrupted) = %x error code = %x", ctx->vector, ctx->eax, ctx->ecx, ctx->edx, ctx->ebx, ctx->esp, ctx->ebp, ctx->esi, ctx->edi, ctx->ds, ctx->es, ctx->fs, ctx->gs, ctx->cs,\
    ctx->ss, ctx->eip, ctx->eflags, ctx->errorCode);
+   asm("sti");
 }
 
 void timer_interrupt(context* ctx) {
-    print("%d ", counter++);
+    // print("%d ", counter++);
+    print(" ");
 }
