@@ -4,6 +4,10 @@
 #define PIC2 0xA0
 
 #define ICW1 0x11
+#define ICW2_MASTER 0x20
+#define ICW2_SLAVE 0x28
+#define ICW3_MASTER 0b00000100
+#define ICW3_SLAVE 0b000000010
 #define ICW4 0x01
 
 
@@ -15,9 +19,9 @@ void init_pics() {
     outb(PIC2, ICW1);
     outb(0x80, 0);
 
-    outb(PIC1 + 1, 0x20);
+    outb(PIC1 + 1, ICW2_MASTER);
     outb(0x80, 0); 
-    outb(PIC2 + 1, 0x28);
+    outb(PIC2 + 1, ICW2_SLAVE);
     outb(0x80, 0);
 
     outb(PIC1 + 1, 4);
@@ -30,6 +34,6 @@ void init_pics() {
     outb(PIC2 + 1, ICW4);
     outb(0x80, 0);
 
-    outb(PIC1 + 1, 0b11111001);
+    outb(PIC1 + 1, 0b11111010);
     outb(PIC2 + 1, 0xFF);
 }

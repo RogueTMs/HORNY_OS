@@ -38,10 +38,9 @@ void __main(){
   // print("b");
   // vga_print_char('A', 0, 0);
   // init_pics(1, 1);
-  // int i = 1 / 0;
   // printNum(0x0, numLen(0, 10), 10);
   init_pics();
-  asm("sti");
+  // asm("sti");
 	for (;;);
 }
 
