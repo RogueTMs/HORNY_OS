@@ -1,14 +1,7 @@
 [BITS 32]
 
-; [GLOBAL _notsti]
-
-; _notsti: 
-;     sti 
-;     ret
-
 [GLOBAL _inb]
 [GLOBAL _outb]
-
 
 
 _inb:

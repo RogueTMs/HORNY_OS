@@ -41,10 +41,10 @@ void __main(){
   // vga_print_char('A', 0, 0);
   // printNum(0x0, numLen(0, 10), 10);
   init_pics();
-  // experiment();
-  asm("sti");
-  for (int i = 0;;i++) {
-    print("%d", i);
-  }
+  experiment();
+  // asm("sti");
+  // for (int i = 0;;i++) {
+  //   print("*");
+  // }
 }
 
