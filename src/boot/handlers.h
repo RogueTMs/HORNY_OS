@@ -30,6 +30,10 @@ typedef struct {
     u16 ss;
 } context;
 
+void init_fake_context(context* ctx, u32 eip);
+
 void default_handler(context* ctx);
 
 void timer_interrupt(context* ctx);
+
+void print_interrupt(context* ctx);

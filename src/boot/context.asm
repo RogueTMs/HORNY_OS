@@ -276,9 +276,6 @@ collect_context:
 
 	call _panic_handler
 
-	mov	al,    0x20
-	out	0x20,  al 
-
 	pop esp
 	popa
 	pop gs

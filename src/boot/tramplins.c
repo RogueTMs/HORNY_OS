@@ -296,7 +296,7 @@ void init_IDT(){
         GateDescriptor tmp;
         tmp.offset_1 = low_16_bits;
         tmp.selector = 0x8;
-        if (vector <= 32) {
+        if (vector < 32) {
             tmp.flags = 0b10001111;
         } else {
             tmp.flags = 0b10001110;
