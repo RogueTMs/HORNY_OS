@@ -37,16 +37,10 @@ void init_fake_context(context *ctx, u32 eip) {
 
 
 void panic_handler(context* ctx) {
-    if (ctx->vector >= 0x20 && ctx->vector < 0x28) {
-        outb(0x20, 0x20);
-    }
-    if (ctx->vector >= 0x70 && ctx->vector < 0x78) {
-        outb(0x20, 0x20);
-        outb(0xA0, 0x20);
-    }
     switch (ctx->vector) {
         case 0x20:
             timer_interrupt(ctx);
+            outb(0x20, 0x20);
             break;
         case 0x69:
             print_interrupt(ctx);

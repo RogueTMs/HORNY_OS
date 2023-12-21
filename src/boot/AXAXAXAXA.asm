@@ -1,18 +1,26 @@
 [BITS 32]
 
-[GLOBAL _pr_1]
-[GLOBAL _change_esp]
+[GLOBAL _entry1]
+[GLOBAL _set_esp]
 
-_pr_1:
+
+; mov esp, _entry1
+; jmp _entry1
+
+
+
+
+_set_esp:
+    pop edx
+    pop eax
+    mov esp, edx
+    pop edx
+    jmp eax
+
+_entry1:
     mov eax, clown
     int 0x69
     ret
-
-_change_esp:
-    mov edx, [esp + 4]
-    jmp edx
-    ret
-
 
 clown: 
     dq "Hello, world!"

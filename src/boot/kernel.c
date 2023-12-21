@@ -21,9 +21,9 @@
 // 
 
 void experiment();
-void pr_1();
+void entry1();
 void process();
-void change_esp(u32 esp);
+void set_esp(u32 ptr, u32 func);
 context ctx;
 
 void* processes[4];
@@ -61,7 +61,7 @@ void __main(){
     // print("%x", processes[0]);
     init_fake_context(&ctx, (u32) process_ptr);
     mem_cpy(&ctx, processes[0], sizeof(context));
-    change_esp((u32)((byte*) processes[0] + sizeof(context)));
+    set_esp((u32) processes[0] + sizeof(context), (u32) process_ptr);
     // console_print(&cnsl1, "%d ", 123);
     // for (u32 i = 0; i < 500; i++) {
     //   console_print(&cnsl1, "%d ", i);
@@ -74,7 +74,5 @@ void __main(){
 }
 
 void process() {
-  for (;;) {
-    pr_1();
-  }
+	entry1();
 }
