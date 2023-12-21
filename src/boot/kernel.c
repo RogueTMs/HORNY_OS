@@ -33,7 +33,6 @@ void process_2();
 void process_3();
 void process_4();
 
-void set_esp(u32 ptr, u32 func);
 context ctx;
 u32 stack_ptrs[4];
 u32 eips[4];

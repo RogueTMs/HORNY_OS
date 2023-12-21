@@ -78,5 +78,6 @@ void timer_handler(context* ctx) {
     stack_ptrs[counter] = (u32) ctx;
     eips[counter] = ctx->eip;
     counter = (counter + 1) % 4;
-    set_esp(stack_ptrs[counter], eips[counter]);
+    set_esp(stack_ptrs[counter]);
+
 }

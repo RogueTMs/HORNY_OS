@@ -15,12 +15,7 @@
 
 _set_esp:
     mov edx, [esp + 4]
-    mov eax, [esp + 8]
-    mov esp, edx
-    pop edx
-    pop edx
-    pop edx
-    jmp eax
+    ret 
 
 _entry1:
     mov eax, clown

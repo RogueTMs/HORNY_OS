@@ -38,4 +38,4 @@ void timer_handler(context* ctx);
 
 void print_interrupt(context* ctx);
 
-void set_esp(u32 esp, u32 eip);
+void set_esp(u32 esp);
