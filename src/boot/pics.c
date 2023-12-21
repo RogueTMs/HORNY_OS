@@ -34,6 +34,6 @@ void init_pics() {
     outb(PIC2 + 1, ICW4);
     outb(0x80, 0);
 
-    outb(PIC1 + 1, 0b11111011);
+    outb(PIC1 + 1, 0b11111010);
     outb(PIC2 + 1, 0xFF);
 }

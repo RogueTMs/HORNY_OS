@@ -6,9 +6,14 @@
 
 static u32 counter = 0;
 
-extern console cons; 
+extern console cons;
+extern void* processes[4];
+extern u32 stack_ptrs[4];
+extern u32 eips[4];
+extern console* consoles[4];
 
-void init_fake_context(context *ctx, u32 eip) {
+void create_context(void* ptr, u32 size, u32 eip) {
+    context* ctx = ptr + size - sizeof(context);
     ctx->edi = 0;
     ctx->esi = 0;
     ctx->ebp = 0;
@@ -39,7 +44,7 @@ void init_fake_context(context *ctx, u32 eip) {
 void panic_handler(context* ctx) {
     switch (ctx->vector) {
         case 0x20:
-            timer_interrupt(ctx);
+            timer_handler(ctx);
             outb(0x20, 0x20);
             break;
         case 0x69:
@@ -64,12 +69,14 @@ void default_handler(context* ctx) {
 //    asm("sti");
 }
 
-void timer_interrupt(context* ctx) {
-    print("%d   ", counter++);
-    // print("*");
-}
-
 void print_interrupt(context* ctx) {
     char* s = (char*) ctx->eax;
-    console_print(&cons, s);
+    console_print(consoles[counter], s);
+}
+
+void timer_handler(context* ctx) {
+    stack_ptrs[counter] = (u32) ctx;
+    eips[counter] = ctx->eip;
+    counter = (counter + 1) % 4;
+    set_esp(stack_ptrs[counter], eips[counter]);
 }
