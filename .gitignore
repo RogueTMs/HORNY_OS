@@ -1,12 +1,12 @@
 # Config
 os.bxrc
 os-dbg.bxrc
-*.bin
-*.img
-*.tmp
-*.o
-bx_enh_dbg.ini
-src/kernel/kernel.o
-src/kernel/kernel.tmp
+#*.bin
+#*.img
+#*.tmp
+#*.o
+#bx_enh_dbg.ini
+#src/kernel/kernel.o
+#src/kernel/kernel.tmp
 .vscode
 .idea/workspace.xml
