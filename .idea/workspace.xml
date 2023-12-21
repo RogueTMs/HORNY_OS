@@ -12,7 +12,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05e38fe4-98d7-4bdf-97f9-24db04105230" name="Default Changelist" comment="" />
+    <list default="true" id="05e38fe4-98d7-4bdf-97f9-24db04105230" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boot/AXAXAXAXA.asm" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/AXAXAXAXA.asm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boot/handlers.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/handlers.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boot/handlers.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/handlers.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boot/kernel.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/kernel.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
