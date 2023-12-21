@@ -3,6 +3,7 @@
 typedef unsigned int u32;
 typedef unsigned short u16;
 
+#pragma pack(push, 1)
 typedef struct {
     u32 edi;
     u32 esi;
@@ -29,6 +30,7 @@ typedef struct {
     u32 esp_1;
     u16 ss;
 } context;
+#pragma pack(pop)
 
 void create_context(void* ptr, u32 size, u32 eip);
 

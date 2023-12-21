@@ -11,13 +11,14 @@ extern void* processes[4];
 extern u32 stack_ptrs[4];
 extern u32 eips[4];
 extern console consoles[4];
+int flag = 0;
 
 void create_context(void* ptr, u32 size, u32 eip) {
     context* ctx = ptr + size - sizeof(context);
     ctx->edi = 0;
     ctx->esi = 0;
     ctx->ebp = 0;
-    ctx->esp = 0; 
+    ctx->esp = 0;
     ctx->ebx = 0;
     ctx->edx = 0;
     ctx->ecx = 0;
@@ -38,6 +39,9 @@ void create_context(void* ptr, u32 size, u32 eip) {
     ctx->eflags = 0;
     ctx->esp_1 = 0;
     ctx->ss = 0;
+
+    u32* esp = (void* )ctx - sizeof(u32);
+    *esp = (u32) ctx;
 }
 
 
@@ -54,6 +58,7 @@ void panic_handler(context* ctx) {
             default_handler(ctx);
             break;
     }
+//    asm("pop %eax");
 }
 
 
@@ -75,9 +80,29 @@ void print_interrupt(context* ctx) {
 }
 
 void timer_handler(context* ctx) {
-    stack_ptrs[counter] = (u32) ctx;
-    eips[counter] = ctx->eip;
-    counter = (counter + 1) % 4;
+    if (flag == 1) {
+//        kernel_panic("%x", ctx->eip);
+        print("%x\n", ctx->eip);
+        stack_ptrs[counter] = (u32) ctx;
+        counter = (counter + 1) % 4;
+    } else {
+        flag = 1;
+    }
     set_esp(stack_ptrs[counter]);
 
+
+
+//    kernel_panic("%x", ctx->eip);
+//    eips[counter] = ctx->eip;
+//    default_handler((context* )stack_ptrs[1]);
+//    if (counter == 1){
+//        if (flag == 0){
+//            flag = 1;
+//        } else {
+//            default_handler(ctx);
+//        }
+//    }
+
+//    asm("add %esp, 4");
+//
 }

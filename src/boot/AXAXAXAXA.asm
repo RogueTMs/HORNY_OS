@@ -14,8 +14,10 @@
 
 
 _set_esp:
-    mov edx, [esp + 4]
-    ret 
+    mov ebx, [esp]
+    mov eax, [esp + 4]
+    mov esp, eax
+    jmp ebx
 
 _entry1:
     mov eax, clown
