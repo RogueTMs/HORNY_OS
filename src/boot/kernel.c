@@ -40,7 +40,7 @@ u32 eips[4];
 
 void* processes[4];
 
-console* consoles[4];
+console consoles[4];
 
 void __main(){
     init_printer();
@@ -69,10 +69,10 @@ void __main(){
     }
     init_pics();
     // experiment();
-    init_console(consoles[0], 0, 0, 12, 40);
-    init_console(consoles[1], 40, 0, 12, 40);
-    init_console(consoles[2], 0, 13, 12, 40);
-    init_console(consoles[3], 40, 13, 12, 40);
+    init_console(consoles, 0, 0, 12, 40);
+    init_console(consoles + 1, 40, 0, 12, 40);
+    init_console(consoles + 2, 0, 13, 12, 40);
+    init_console(consoles + 3, 40, 13, 12, 40);
 
     void (*ptr_1)(void) = &process_1;
     void (*ptr_2)(void) = &process_2;
@@ -86,6 +86,7 @@ void __main(){
     create_context(processes[1], 0x10000, (u32) ptr_2);
     create_context(processes[2], 0x10000, (u32) ptr_3);
     create_context(processes[3], 0x10000, (u32) ptr_4);
+    // process_1();
     // print("%x", processes[0]);
     // console_print(&cnsl1, "%d ", 123);
     // for (u32 i = 0; i < 500; i++) {

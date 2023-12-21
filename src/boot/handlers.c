@@ -10,7 +10,7 @@ extern console cons;
 extern void* processes[4];
 extern u32 stack_ptrs[4];
 extern u32 eips[4];
-extern console* consoles[4];
+extern console consoles[4];
 
 void create_context(void* ptr, u32 size, u32 eip) {
     context* ctx = ptr + size - sizeof(context);
@@ -71,7 +71,7 @@ void default_handler(context* ctx) {
 
 void print_interrupt(context* ctx) {
     char* s = (char*) ctx->eax;
-    console_print(consoles[counter], s);
+    console_print(consoles + counter, s);
 }
 
 void timer_handler(context* ctx) {
