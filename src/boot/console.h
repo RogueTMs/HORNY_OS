@@ -11,8 +11,9 @@ typedef struct {
     u32 LENGTH;
     u32 shift_X;
     u32 shift_Y;
+    u16 color_mask;
 } console;
 
 
-void init_console(console* cnsl, u32 shift_X, u32 shift_Y, u32 HEIGHT, u32 LENGTH);
+void init_console(console* cnsl, u32 shift_X, u32 shift_Y, u32 HEIGHT, u32 LENGTH, u16 color_mask);
 void console_print(console* cnsl, char* fmt, ...);

@@ -6,6 +6,8 @@
 #define SCREEN_LENGTH 80
 #define SCREEN_HEIGHT 25
 
+short int bit_mask;
+
 static void scroll(console* cnsl) {
     u16* start = cnsl->start;
     for (u32 i = 1; i < cnsl->HEIGHT; i++) {
@@ -26,7 +28,6 @@ static void check_newline(console* cnsl) {
         cnsl->Y++;
         scroll_check(cnsl);
         cnsl->X = 0;
-
     }
 }
 
@@ -39,20 +40,21 @@ static void clear_console(console* cnsl) {
 }
 
 
-void init_console(console* cnsl, u32 shift_X, u32 shift_Y, u32 HEIGHT, u32 LENGTH){
+void init_console(console* cnsl, u32 shift_X, u32 shift_Y, u32 HEIGHT, u32 LENGTH, u16 color_mask){
     cnsl->start = (short*) START + shift_X + shift_Y * SCREEN_LENGTH;
     cnsl->HEIGHT = HEIGHT;
     cnsl->LENGTH = LENGTH;
     cnsl->X = 0;
     cnsl->Y = 0;
+    cnsl->color_mask = color_mask;
 }
 
 static void console_print_char(console* cnsl, char symbol){
     if (symbol != '\n') {
-        short int bit_mask = 0b0000010100000000;
+        short int bit_mask = cnsl->color_mask;
         bit_mask |= (short) symbol;
         check_newline(cnsl);
-        *(cnsl->start + cnsl->Y * SCREEN_LENGTH + cnsl->X) = bit_mask;  
+        *(cnsl->start + cnsl->Y * SCREEN_LENGTH + cnsl->X) = bit_mask;
         cnsl->X++;
     }
 }
@@ -107,7 +109,7 @@ void console_print(console* cnsl, char* fmt, ...) {
                     char* s = *((char**) pointer);
                     pointer += sizeof(char*);
                     console_print_str(cnsl, s);
-                    // cnsl->X = (cnsl->X + len(s)) % cnsl->LENGTH;
+
                     break;
                 case 'd':
                     n = *((int*) pointer);

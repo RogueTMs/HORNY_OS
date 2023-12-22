@@ -32,11 +32,11 @@ typedef struct {
 } context;
 #pragma pack(pop)
 
-void create_context(void* ptr, u32 size, u32 eip);
+context* create_context(void* ptr, u32 size, u32 eip);
 
 void default_handler(context* ctx);
 
-void timer_handler(context* ctx);
+void timer_handler(context** ctx);
 
 void print_interrupt(context* ctx);
 

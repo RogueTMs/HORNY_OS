@@ -7,18 +7,6 @@
 [GLOBAL _set_esp]
 
 
-; mov esp, _entry1
-; jmp _entry1
-
-
-
-
-_set_esp:
-    mov ebx, [esp]
-    mov eax, [esp + 4]
-    mov esp, eax
-    jmp ebx
-
 _entry1:
     mov eax, clown
     int 0x69

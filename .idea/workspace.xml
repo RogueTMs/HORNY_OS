@@ -15,6 +15,8 @@
     <list default="true" id="05e38fe4-98d7-4bdf-97f9-24db04105230" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boot/AXAXAXAXA.asm" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/AXAXAXAXA.asm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boot/console.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/console.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boot/console.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/console.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boot/handlers.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/handlers.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boot/handlers.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/handlers.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boot/kernel.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/boot/kernel.c" afterDir="false" />
@@ -84,9 +86,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1703171211787" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1699539253411">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1703193015784">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1699539253411" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1703193015784" />
   </component>
 </project>
