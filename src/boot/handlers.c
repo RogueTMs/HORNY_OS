@@ -35,7 +35,7 @@ context* create_context(void *ptr, u32 size, u32 eip) {
     ctx->eip = eip;
     ctx->cs = 0x8;
     ctx->p5 = 0;
-    ctx->eflags = 0;
+    ctx->eflags = 0x200;
     ctx->esp_1 = 0;
     ctx->ss = 0;
 
@@ -43,7 +43,7 @@ context* create_context(void *ptr, u32 size, u32 eip) {
 }
 
 
-void panic_handler(context *ctx) {
+void panic_handler(context* ctx) {
     switch (ctx->vector) {
         case 0x20:
             timer_handler(&ctx);
@@ -71,7 +71,7 @@ void default_handler(context *ctx) {
 }
 
 void print_interrupt(context *ctx) {
-    asm("sti");
+    // asm("sti");
     char *s = (char *) ctx->eax;
     console_print(consoles + counter, s);
 }
@@ -83,6 +83,5 @@ void timer_handler(context** ctx) {
     } else {
         flag = 1;
     }
-
     *ctx = stack_ptrs[counter];
 }
