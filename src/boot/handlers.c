@@ -1,6 +1,5 @@
 #include "kernel_panic.h"
 #include "handlers.h"
-#include "vga_funcs.h"
 #include "pics.h"
 #include "console.h"
 

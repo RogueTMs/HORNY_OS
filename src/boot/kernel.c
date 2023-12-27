@@ -32,8 +32,6 @@ void entry3();
 
 void entry4();
 
-void set_esp(u32 esp);
-
 void process_1();
 
 void process_2();

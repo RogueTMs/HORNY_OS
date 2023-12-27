@@ -4,7 +4,6 @@
 [GLOBAL _entry2]
 [GLOBAL _entry3]
 [GLOBAL _entry4]
-[GLOBAL _set_esp]
 
 
 _entry1:
