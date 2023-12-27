@@ -24,13 +24,7 @@
 
 void experiment();
 
-void entry1();
-
-void entry2();
-
-void entry3();
-
-void entry4();
+void entry(char* line);
 
 void process_1();
 
@@ -90,24 +84,24 @@ void __main() {
 
 void process_1() {
     for (;;) {
-        entry1();
+        entry("AXAXAXA");
     }
 }
 
 void process_2() {
     for (;;) {
-        entry2();
+        entry("Hello, world!");
     }
 }
 
 void process_3() {
     for (;;) {
-        entry3();
+        entry("Lambert, Lambert, *** morzhovyi, Lambert, Lambert - vrednyi ***");
     }
 }
 
 void process_4() {
     for (;;) {
-        entry4();
+        entry("**** po lbu ne dalo");
     }
 }
